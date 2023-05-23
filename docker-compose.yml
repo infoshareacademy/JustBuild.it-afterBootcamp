@@ -11,4 +11,7 @@ services:
       MYSQL_USER: User
       MYSQL_PASSWORD: SecretPassword
     ports:
-      - "3306:3306"
+      - "3307:3306"
+
+volumes:
+  db_data:
