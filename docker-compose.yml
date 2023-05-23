@@ -1,0 +1,14 @@
+services:
+  db:
+    image: mysql:8
+    container_name: justBuild.it.web_mysql_db
+    volumes:
+      - db_data:/var/justBuild.it.web/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secretRootPassword
+      MYSQL_DATABASE: justBuild.it.webPortal
+      MYSQL_USER: User
+      MYSQL_PASSWORD: SecretPassword
+    ports:
+      - "3306:3306"
