@@ -3,6 +3,7 @@ package com.jaszczurki.justbuild_it_web_portal.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import java.util.Set;
 import static com.jaszczurki.justbuild_it_web_portal.entity.constants.ApplicationConstants.PASSWORD_FORMAT;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -27,11 +29,4 @@ public class UserAuthDto {
     @Pattern(regexp = PASSWORD_FORMAT)
     private String dtoPassword;
     private Set<GrantedAuthority> dtoAuthorities;
-
-    public UserAuthDto() {
-        this.dtoUserId = 0L;
-        this.dtoUsername = "";
-        this.dtoPassword = "";
-        this.dtoAuthorities = null;
-    }
 }
