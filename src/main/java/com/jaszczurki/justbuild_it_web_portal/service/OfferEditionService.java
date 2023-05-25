@@ -27,6 +27,19 @@ class OfferEditionService {
     }
 
     public Offer updateOffer(OfferDto editedOfferDto) {
-        return offerRepository.save(mapper.fromDto(editedOfferDto));
+        Offer existingOffer = offerRepository.findById(editedOfferDto.getDtoOfferId())
+                .orElseThrow(() -> new IllegalArgumentException("Offer not found"));
+        existingOffer.setCity(editedOfferDto.getCity());
+        existingOffer.getUser().setFirstName(editedOfferDto.getUserFirstName());
+        existingOffer.getUser().setLastName(editedOfferDto.getUserLastName());
+        existingOffer.getUser().setCompany(editedOfferDto.getUserCompanyName());
+        existingOffer.getUser().setEmailAddress(editedOfferDto.getUserEmailAddress());
+        existingOffer.getUser().setTelephoneNumber(editedOfferDto.getUserTelephoneNumber());
+        existingOffer.setOfferContent(editedOfferDto.getOfferContent());
+        existingOffer.setServiceCategory(editedOfferDto.getServiceCategory());
+        existingOffer.setDate(editedOfferDto.getDateTime());
+        existingOffer.setExpiryDate(editedOfferDto.getExpiryDate());
+
+        return offerRepository.save(existingOffer);
     }
 }
