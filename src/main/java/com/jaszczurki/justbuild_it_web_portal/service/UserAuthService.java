@@ -23,12 +23,11 @@ public class UserAuthService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthService.class);
 
-    public void addUserFromForm(String username, String password, boolean isAdmin, String firstName, String lastName,
-                                String company, String emailAddress, String telephoneNumber) {
+    public void addUserFromForm(String username, String password, boolean isAdmin, UserAuthDto userDto) {
         LOGGER.debug("Adding user from form: username='{}'", username);
 
         String encodedPassword = passwordEncoder.encode(password);
-        User newUser = authMapper.fromDto(new UserAuthDto());
+        User newUser = authMapper.fromDto(userDto);
         newUser.setUsername(username);
         newUser.setPassword(encodedPassword);
 
@@ -36,17 +35,21 @@ public class UserAuthService {
             newUser.setAuthorities(Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
         } else {
             newUser.setAuthorities(Collections.singleton(new SimpleGrantedAuthority("USER")));
-            newUser.setFirstName(firstName);
-            newUser.setLastName(lastName);
-            newUser.setCompany(company);
-            newUser.setEmailAddress(emailAddress);
-            newUser.setTelephoneNumber(telephoneNumber);
+            setAdditionalUserDetails(newUser, userDto);
         }
         userRepository.save(newUser);
     }
 
-    public void addAdminFromForm(String username, String password) {
-        addUserFromForm(username, password, true, "admin", "admin", "admin", "admin@admin.com", "admin");
+    public void addAdminFromForm(String username, String password, UserAuthDto userDto) {
+        addUserFromForm(username, password, true, userDto);
+    }
+
+    private void setAdditionalUserDetails(User user, UserAuthDto userDto) {
+        user.setFirstName(userDto.getDtoFirstName());
+        user.setLastName(userDto.getDtoLastName());
+        user.setCompany(userDto.getDtoCompany());
+        user.setEmailAddress(userDto.getDtoEmail());
+        user.setTelephoneNumber(userDto.getDtoPhoneNumber());
     }
 
     public User findUserByLogin(String username) {

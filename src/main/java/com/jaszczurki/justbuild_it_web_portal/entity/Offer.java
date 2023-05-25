@@ -64,15 +64,6 @@ public class Offer {
         this.expiryDate = this.date.plusDays(30);
     }
 
-    public Offer(UUID offerID, ServiceCategory serviceCategory, String offerContent, String city, User user, LocalDateTime date) {
-        this.offerId = offerID;
-        this.serviceCategory = serviceCategory;
-        this.offerContent = offerContent;
-        this.city = city;
-        this.user = user;
-        this.date = date;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

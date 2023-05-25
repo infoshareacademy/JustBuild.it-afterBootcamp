@@ -46,10 +46,9 @@ public class UserAuthController {
         }
 
         if (username.equals("admin")) {
-            userAuthService.addAdminFromForm(username, userDto.getDtoPassword());
+            userAuthService.addAdminFromForm(username, userDto.getDtoPassword(), userDto);
         } else {
-            userAuthService.addUserFromForm(username, userDto.getDtoPassword(), false, userDto.getDtoFirstName(),
-                    userDto.getDtoLastName(), userDto.getDtoCompany(), userDto.getDtoEmail(), userDto.getDtoPhoneNumber());
+            userAuthService.addUserFromForm(username, userDto.getDtoPassword(), false, userDto);
         }
         return "redirect:/login_form";
     }
