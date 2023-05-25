@@ -17,16 +17,56 @@
 <form th:action="@{/register}" th:object="${user}" method="post">
     <div>
         <label for="username">Login:</label>
-        <input type="text" id="username" th:field="*{username}" required>
-        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+        <input type="text" id="username" th:field="*{dtoUsername}" required>
+        <div th:if="${#fields.hasErrors('dtoUsername')}" th:errors="*{dtoUsername}"
              class="error-message"></div>
     </div>
     <br>
     <br>
     <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" required>
-        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+        <input type="password" id="password" th:field="*{dtoPassword}" required>
+        <div th:if="${#fields.hasErrors('dtoPassword')}" th:errors="*{dtoPassword}"
+             class="error-message"></div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <label for="firstName">First name:</label>
+        <input type="text" id="firstName" th:field="*{dtoFirstName}" required>
+        <div th:if="${#fields.hasErrors('dtoFirstName')}" th:errors="*{dtoFirstName}"
+             class="error-message"></div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <label for="lastName">Last name:</label>
+        <input type="text" id="lastName" th:field="*{dtoLastName}" required>
+        <div th:if="${#fields.hasErrors('dtoLastName')}" th:errors="*{dtoLastName}"
+             class="error-message"></div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <label for="company">Company name:</label>
+        <input type="text" id="company" th:field="*{dtoCompany}" required>
+        <div th:if="${#fields.hasErrors('dtoCompany')}" th:errors="*{dtoCompany}"
+             class="error-message"></div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <label for="email">User email:</label>
+        <input type="text" id="email" th:field="*{dtoEmail}" required>
+        <div th:if="${#fields.hasErrors('dtoEmail')}" th:errors="*{dtoEmail}"
+             class="error-message"></div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <label for="phone">Phone number:</label>
+        <input type="text" id="phone" th:field="*{dtoPhoneNumber}" required>
+        <div th:if="${#fields.hasErrors('dtoPhoneNumber')}" th:errors="*{dtoPhoneNumber}"
              class="error-message"></div>
     </div>
     <br>

@@ -23,6 +23,11 @@ import static com.jaszczurki.justbuild_it_web_portal.entity.constants.Applicatio
 public class UserAuthDto {
 
     private Long dtoUserId;
+    private String dtoFirstName;
+    private String dtoLastName;
+    private String dtoCompany;
+    private String dtoEmail;
+    private String dtoPhoneNumber;
     @NotBlank
     private String dtoUsername;
     @NotBlank

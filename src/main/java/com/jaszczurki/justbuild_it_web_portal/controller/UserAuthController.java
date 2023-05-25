@@ -1,5 +1,6 @@
 package com.jaszczurki.justbuild_it_web_portal.controller;
 
+import com.jaszczurki.justbuild_it_web_portal.dto.UserAuthDto;
 import com.jaszczurki.justbuild_it_web_portal.entity.User;
 import com.jaszczurki.justbuild_it_web_portal.service.UserAuthService;
 import lombok.RequiredArgsConstructor;
@@ -26,17 +27,17 @@ public class UserAuthController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserAuthDto());
         return "registration";
     }
 
     @PostMapping("/register")
-    public String processRegistrationForm(@Valid @ModelAttribute("user") User user, BindingResult result) {
+    public String processRegistrationForm(@Valid @ModelAttribute("user") UserAuthDto userDto, BindingResult result) {
         if (result.hasErrors()) {
             return "registration";
         }
 
-        String username = user.getUsername();
+        String username = userDto.getDtoUsername();
         User existingUser = userAuthService.findUserByLogin(username);
 
         if(existingUser != null) {
@@ -44,12 +45,11 @@ public class UserAuthController {
             return "registration";
         }
 
-        String password = user.getPassword();
-
         if (username.equals("admin")) {
-            userAuthService.addAdminFromForm(username, password);
+            userAuthService.addAdminFromForm(username, userDto.getDtoPassword());
         } else {
-            userAuthService.addUserFromForm(username, password, false);
+            userAuthService.addUserFromForm(username, userDto.getDtoPassword(), false, userDto.getDtoFirstName(),
+                    userDto.getDtoLastName(), userDto.getDtoCompany(), userDto.getDtoEmail(), userDto.getDtoPhoneNumber());
         }
         return "redirect:/login_form";
     }

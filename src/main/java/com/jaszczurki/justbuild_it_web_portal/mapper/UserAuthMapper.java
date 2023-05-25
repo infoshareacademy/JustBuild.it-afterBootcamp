@@ -13,6 +13,11 @@ public class UserAuthMapper {
                 .dtoUsername(user.getUsername())
                 .dtoPassword(user.getPassword())
                 .dtoAuthorities(user.getAuthorities())
+                .dtoFirstName(user.getFirstName())
+                .dtoLastName(user.getLastName())
+                .dtoCompany(user.getCompany())
+                .dtoEmail(user.getEmailAddress())
+                .dtoPhoneNumber(user.getTelephoneNumber())
                 .build();
     }
 
@@ -22,6 +27,11 @@ public class UserAuthMapper {
                 .username(userAuthDto.getDtoUsername())
                 .password(userAuthDto.getDtoPassword())
                 .authorities(userAuthDto.getDtoAuthorities())
+                .firstName(userAuthDto.getDtoFirstName())
+                .lastName(userAuthDto.getDtoLastName())
+                .company(userAuthDto.getDtoCompany())
+                .emailAddress(userAuthDto.getDtoEmail())
+                .telephoneNumber(userAuthDto.getDtoPhoneNumber())
                 .build();
     }
 }
