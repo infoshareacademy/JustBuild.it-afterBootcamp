@@ -87,7 +87,7 @@ public class OfferController {
     }
 
     @GetMapping("editOffer/{id}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() and !principal.equals('anonymousUser')")
     public String goEdit(@PathVariable UUID id, Model model) {
         OfferDto offerDto = offerService.getOfferDtoById(id);
 
@@ -106,7 +106,7 @@ public class OfferController {
     }
 
     @PostMapping("editOffer")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() and !principal.equals('anonymousUser')")
     public String editOffer(@Valid @ModelAttribute("offer") OfferDto offerDto, BindingResult result) {
         if (result.hasErrors()) {
             LOGGER.debug("Binding Results has errors '{}' , returning addOffer page", result);
@@ -121,10 +121,6 @@ public class OfferController {
     @PreAuthorize("isAuthenticated() and !principal.equals('anonymousUser')")
     public String showUserOffers(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
-        System.out.println(isAdmin);
 
         String username = authentication.getName();
         Long userId = offerService.getUserIdByUsername(username);
