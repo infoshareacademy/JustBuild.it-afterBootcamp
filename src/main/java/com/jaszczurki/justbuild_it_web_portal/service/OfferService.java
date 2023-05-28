@@ -64,9 +64,16 @@ public class OfferService {
         return mapper.toDtoList(offerSearchingService.findAllOffersFilteredByCategory(category));
     }
 
-    public List<OfferDto> provideAllDtoList() {
-        LOGGER.debug("Providing all offer DTO list");
-        List<OfferDto> allOfferDtoList = mapper.toDtoList(offerSearchingService.findAllOffers());
+    public List<OfferDto> provideAllActiveOffersDtoList() {
+        LOGGER.debug("Providing all active offer DTO list");
+        List<OfferDto> allOfferDtoList = mapper.toDtoList(offerSearchingService.findAllActiveOffers());
+        allOfferDtoList.sort(Comparator.comparing(OfferDto::getDateTime).reversed());
+        return allOfferDtoList;
+    }
+
+    public List<OfferDto> provideAllInactiveOffersDtoList() {
+        LOGGER.debug("Providing all active offer DTO list");
+        List<OfferDto> allOfferDtoList = mapper.toDtoList(offerSearchingService.findAllInactiveOffers());
         allOfferDtoList.sort(Comparator.comparing(OfferDto::getDateTime).reversed());
         return allOfferDtoList;
     }
@@ -196,5 +203,14 @@ public class OfferService {
         OfferDto offerDtoById = offerEditionService.findOfferDtoById(id);
         offerDtoById.setExpiryDate(LocalDateTime.now());
         offerEditionService.updateOffer(offerDtoById);
+        LOGGER.info("Terminated offer: '{}'", offerDtoById);
+    }
+
+    public boolean isLoggedUserAdminOrOwnerForOffer(OfferDto offerDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Long userId = getUserIdByUsername(username);
+        LOGGER.info("Checking user '{}' authentication", userId);
+        return ((authentication.isAuthenticated() && username.equals("admin")) || offerDto.getUserId().equals(userId));
     }
 }

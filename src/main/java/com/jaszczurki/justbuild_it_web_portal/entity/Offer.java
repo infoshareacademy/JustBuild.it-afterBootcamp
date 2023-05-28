@@ -1,7 +1,6 @@
 package com.jaszczurki.justbuild_it_web_portal.entity;
 
 import com.jaszczurki.justbuild_it_web_portal.entity.dictionary.ServiceCategory;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
