@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,14 +21,19 @@ class OfferSearchingService {
     private final OfferRepository offerRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(OfferSearchingService.class);
 
-    public List<Offer> findAllOffers() {
-        LOGGER.debug("Retrieving all offers from db: {}", DB_REFERENCE);
-        return offerRepository.findAll();
+    public List<Offer> findAllActiveOffers() {
+        LOGGER.debug("Retrieving all active offers from db: '{}'", DB_REFERENCE);
+        return offerRepository.findAll().stream().filter(value -> value.getExpiryDate().isAfter(LocalDateTime.now())).collect(Collectors.toList());
+    }
+
+    public List<Offer> findAllInactiveOffers() {
+        LOGGER.debug("Retrieving all inactive offers from db: '{}'", DB_REFERENCE);
+        return offerRepository.findAll().stream().filter(value -> value.getExpiryDate().isBefore(LocalDateTime.now())).collect(Collectors.toList());
     }
 
     public List<Offer> findAllOffersFilteredBySearchValue(String searchValue) {
         LOGGER.debug("Retrieving offers from db: {} filtered by search value: '{}'", DB_REFERENCE, searchValue);
-        List<Offer> offers = offerRepository.findAll();
+        List<Offer> offers = findAllActiveOffers();
 
         return offers.stream()
                 .sorted(Comparator.comparing(Offer::getDate).reversed())
@@ -42,7 +48,7 @@ class OfferSearchingService {
 
     public List<Offer> findAllOffersFilteredByCategory(String category) {
         LOGGER.debug("Retrieving offers from file {} filtered by category '{}'", DB_REFERENCE, category);
-        List<Offer> offers = offerRepository.findAll();
+        List<Offer> offers = findAllActiveOffers();
 
         return offers.stream()
                 .sorted(Comparator.comparing(Offer::getDate).reversed())

@@ -45,7 +45,7 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="offer : ${activeFilteredOfferDtoList}">
+                    <tr th:each="offer : ${activeOffers}">
                         <td th:text="${offer.dtoOfferId}"></td>
                         <td th:text="${offer.serviceCategory}"></td>
                         <td th:text="${offer.city}"></td>
@@ -75,7 +75,7 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="offer : ${inactiveFilteredOfferDtoList}">
+                    <tr th:each="offer : ${inactiveOffers}">
                         <td th:text="${offer.dtoOfferId}"></td>
                         <td th:text="${offer.serviceCategory}"></td>
                         <td th:text="${offer.city}"></td>
@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        <div th:each="offerToModal : ${activeFilteredOfferDtoList}">
+        <div th:each="offerToModal : ${activeOffers}">
             <div class="modal fade" th:id="'modalActiveOffers-' + ${offerToModal.dtoOfferId}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -125,7 +125,7 @@
             </div>
         </div>
 
-        <div th:each="offerToModal : ${inactiveFilteredOfferDtoList}">
+        <div th:each="offerToModal : ${inactiveOffers}">
             <div class="modal fade" th:id="'modalInactiveOffers-' + ${offerToModal.dtoOfferId}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">

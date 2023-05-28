@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-class UserOfferService {
+public class UserOfferService {
 
     private final OfferRepository offerRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(UserOfferService.class);
@@ -31,3 +31,4 @@ class UserOfferService {
         return offer.getExpiryDate().isAfter(LocalDateTime.now());
     }
 }
+
